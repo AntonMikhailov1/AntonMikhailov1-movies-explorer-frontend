@@ -1,2 +1,12 @@
-# AntonMikhailov1-movies-explorer-frontend
-Проект Movies-Explorer
+# Проект Movies-explorer
+
+## адрес pull request'а
+
+## Выбраный макет
+
+Light-4
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
