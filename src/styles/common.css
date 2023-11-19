@@ -79,3 +79,11 @@ body {
   cursor: pointer;
   transition: opacity 0.2s;
 }
+
+.input-focus:focus {
+  border-bottom: 1px solid  #E8E8E8;
+}
+
+.input-placeholder::placeholder {
+  color: var(--search-input-color);
+}

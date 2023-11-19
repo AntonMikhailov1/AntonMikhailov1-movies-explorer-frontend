@@ -5,7 +5,7 @@ import '../../styles/form.css';
 
 const Register = () => {
   return (
-    <section className="register">
+    <main className="register">
       <AuthHeader greeting="Добро Пожаловать!" />
       <form
         action="#"
@@ -17,7 +17,7 @@ const Register = () => {
         <label className="form__input-container">
           Имя
           <input
-            className="form__input"
+            className="form__input input-focus input-placeholder"
             type="text"
             name="name"
             form="register"
@@ -25,18 +25,20 @@ const Register = () => {
             minLength="2"
             maxLength="30"
             id="name-input"
+            placeholder="Введите имя"
           />
           <span className="form__input-error"></span>
         </label>
         <label className="form__input-container">
           E-mail
           <input
-            className="form__input form__input_style_error"
+            className="form__input input-focus input-placeholder form__input_style_error"
             type="text"
             name="email"
             form="register"
             required
             id="email-input"
+            placeholder="Введите Email"
           />
           <span className="form__input-error form__input-error_active">
             Что-то не так
@@ -45,7 +47,7 @@ const Register = () => {
         <label className="form__input-container">
           Пароль
           <input
-            className="form__input"
+            className="form__input input-focus input-placeholder"
             type="password"
             name="password"
             form="register"
@@ -53,12 +55,13 @@ const Register = () => {
             minLength="6"
             maxLength="30"
             id="password-input"
+            placeholder="Введите пароль"
           />
           <span className="form__input-error form__input-error_active"></span>
         </label>
       </form>
       <AuthSubmit formName="register" sumbitButtonText="Зарегистрироваться" />
-    </section>
+    </main>
   );
 };
 

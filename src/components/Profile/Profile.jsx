@@ -3,8 +3,8 @@ import './Profile.css';
 
 const Profile = ({ name, email }) => {
   return (
-    <section className="profile">
-      <h2 className="profile__title">Привет {name || 'Виталий!'}</h2>
+    <main className="profile">
+      <h1 className="profile__title">Привет {name || 'Виталий!'}</h1>
 
       <form
         name="profile"
@@ -18,11 +18,12 @@ const Profile = ({ name, email }) => {
           <input
             type="text"
             name="name"
-            className="profile__input"
+            className="profile__input input-focus input-placeholder"
             defaultValue={name || 'Виталий!'}
             required="true"
             minLength={2}
             maxLength={40}
+            placeholder="Введите имя"
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -30,11 +31,12 @@ const Profile = ({ name, email }) => {
           <input
             type="text"
             name="email"
-            className="profile__input"
+            className="profile__input input-focus input-placeholder"
             defaultValue={email || 'pochta@yandex.ru'}
             required="true"
             minLength={2}
             maxLength={40}
+            placeholder="Введите Email"
           />
         </fieldset>
       </form>
@@ -44,7 +46,7 @@ const Profile = ({ name, email }) => {
       <Link to="/sign-out" className="profile__exit-button link-hover">
         Выйти из аккаунта
       </Link>
-    </section>
+    </main>
   );
 };
 

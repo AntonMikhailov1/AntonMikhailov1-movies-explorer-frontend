@@ -16,6 +16,7 @@
   min-width: 320px;
   height: 100vh;
   background-color: #ffffff;
+  box-shadow: -500px 0px 0px 500px rgba(0, 0, 0, 0.3);
   z-index: 99;
 }
 

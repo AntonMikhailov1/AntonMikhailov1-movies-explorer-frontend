@@ -10,7 +10,7 @@
 .about-me__title {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 70px;
+  margin-bottom: 66px;
   width: 100%;
   max-width: 1140px;
   height: 50px;
@@ -42,6 +42,7 @@
   line-height: 1.16;
   margin-bottom: 18px;
   letter-spacing: -1.8px;
+  flex: 1;
 }
 
 .about-me__article-subtitle {
@@ -49,6 +50,7 @@
   font-weight: 500;
   line-height: 1.11;
   margin-bottom: 26px;
+  flex: 1;
 }
 
 .about-me__article-paragraph {
@@ -56,7 +58,7 @@
   font-weight: 400;
   line-height: 1.57;
   margin-right: 49px;
-  margin-bottom: 99px;
+  flex: 1;
 }
 
 .about-me__github-link {
@@ -65,10 +67,11 @@
   line-height: 1.21;
   text-decoration: none;
   color: var(--aboutme-link-color);
+  flex-shrink: 0;
 }
 
 .about-me__image {
-  max-width: 270px;
+  width: 270px;
   object-fit: cover;
   object-position: top left;
   border-radius: 10px;
@@ -111,7 +114,7 @@
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 720px) {
   .about-me {
     padding-left: 14px;
     padding-right: 14px;

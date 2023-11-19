@@ -42,6 +42,7 @@
   line-height: 1.43;
   margin-bottom: 100px;
   letter-spacing: -0.8px;
+  max-width: 460px;
 }
 
 .techs__grid-container {
@@ -53,6 +54,7 @@
   align-content: center;
   gap: 10px;
   width: 100%;
+  list-style: none;
 }
 
 .techs__grid-item {
@@ -92,7 +94,7 @@
   }
 
   .techs__grid-container {
-    grid-template-columns: repeat(auto-fill, 90px);
+    grid-template-columns: repeat(auto-fit, 84px);
   }
 
   .techs__grid-item {
@@ -127,5 +129,10 @@
     font-size: 11px;
     line-height: 1.45;
     margin-bottom: 50px;
+  }
+
+  .techs__grid-container {
+    padding-right: 30px;
+    padding-left: 30px;
   }
 }

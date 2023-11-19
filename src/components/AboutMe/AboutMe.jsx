@@ -19,6 +19,8 @@ const AboutMe = () => {
             фриланс-заказами.
           </p>
           <a
+            rel="noreferrer"
+            target="_blank"
             href="https://github.com/AntonMikhailov1"
             className="about-me__github-link link-hover"
           >

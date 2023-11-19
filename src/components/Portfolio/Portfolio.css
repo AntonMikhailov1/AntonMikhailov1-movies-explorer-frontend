@@ -27,8 +27,14 @@
 }
 
 .portfolio__list-item {
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 19px;
   border-bottom: 1px solid var(--portfolio-list-item-border-color);
+}
+
+.portfolio__list-item:last-of-type {
+  border-bottom: none
 }
 
 .portfolio__link {
@@ -38,6 +44,13 @@
   text-decoration: none;
   color: var(--portfolio-link-color);
   letter-spacing: -1.15px;
+}
+
+.portfolio__link-icon {
+  padding-top: 12px;
+  font-size: 30px;
+  text-decoration: none;
+  color: #000000;
 }
 
 @media screen and (max-width: 920px) {
@@ -65,10 +78,15 @@
     font-size: 14px;
     line-height: 1.43;
   }
-
+  
   .portfolio__link {
     font-size: 18px;
     line-height: 1.556;
     letter-spacing: -0.8px;
+  }
+
+  .portfolio__link-icon {
+    padding-top: 5px;
+    font-size: 18px;
   }
 }

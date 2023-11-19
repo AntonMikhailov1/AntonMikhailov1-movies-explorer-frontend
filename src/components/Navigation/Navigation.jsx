@@ -14,7 +14,7 @@ const Navigation = () => {
 
   return (
     <>
-      <div
+      <nav
         className={`navigation ${isMenuOpen ? 'navigation_menu-opened' : ''}`}
       >
         <button
@@ -40,7 +40,7 @@ const Navigation = () => {
         <Link to="/profile" className="navigation__profile-link link-hover">
           Аккаунт <div className={`navigation__profile-icon link-hover ${location.pathname === '/' ? 'navigation__profile-icon_landing' : ''}`} ></div>
         </Link>
-      </div>
+      </nav>
       <button
         type="button"
         className="navigation__menu-button button-hover"

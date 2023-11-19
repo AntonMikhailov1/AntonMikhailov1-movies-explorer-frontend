@@ -1,16 +1,17 @@
 import './NotFound.css';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
-    <section className="not-found">
+    <main className="not-found">
       <div className="not-found__container">
         <h1 className="not-found__title">404</h1>
         <p className="not-found__text">Страница не найдена</p>
-        <button className="not-found__return-button" type="button">
-          Назад
-        </button>
       </div>
-    </section>
+      <Link to="/" className="not-found__return-link link-hover">
+        Назад
+      </Link>
+    </main>
   );
 };
 
