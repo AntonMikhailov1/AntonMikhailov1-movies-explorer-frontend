@@ -1,29 +1,68 @@
+import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useFormValidation from '../../hooks/useFormValidation';
+
 import './Profile.css';
 
-const Profile = ({ name, email }) => {
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+
+const Profile = ({ onUserUpdate, onSignOut }) => {
+  const currentUser = useContext(CurrentUserContext);
+  const [isCurrentUser, setCurrentUser] = useState(true);
+  const [isEditing, setEditingStatus] = useState(false);
+  const { values, errors, isFormValid, handleChange, resetValidation } =
+  useFormValidation();
+
+  useEffect(() => {
+    currentUser.name !== values.name || currentUser.email !== values.email
+      ? setCurrentUser(false)
+      : setCurrentUser(true);
+  }, [currentUser, values]);
+
+  useEffect(() => {
+    resetValidation(false, currentUser);
+  }, [resetValidation, currentUser]);
+
+  function handleEditClick() {
+    setEditingStatus(!isEditing);
+  }
+
+  const handleButtonDisable = () => isFormValid && !isCurrentUser ? false : true;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onUserUpdate(values);
+  }
+
   return (
     <main className="profile">
-      <h1 className="profile__title">Привет {name || 'Виталий!'}</h1>
-
+      <h1 className="profile__title">{`Привет ${currentUser.name || ''}!`}</h1>
       <form
         name="profile"
-        action="submit"
+        id="profile"
         className="profile__info"
         method="post"
-        noValidate=""
+        noValidate
+        onSubmit={handleSubmit}
       >
         <fieldset className="profile__fieldset">
           <label className="profile__label">Имя</label>
           <input
             type="text"
             name="name"
-            className="profile__input input-focus input-placeholder"
-            defaultValue={name || 'Виталий!'}
-            required="true"
+            id="name"
+            form="profile"
+            className={`profile__input input-focus input-placeholder ${
+              errors.name && 'profile__input_style_error'
+            }`}
+            onChange={handleChange}
+            value={values.name || ''}
+            disabled={isEditing ? false : true}
+            required
             minLength={2}
-            maxLength={40}
+            maxLength={30}
             placeholder="Введите имя"
+            pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -31,21 +70,37 @@ const Profile = ({ name, email }) => {
           <input
             type="text"
             name="email"
-            className="profile__input input-focus input-placeholder"
-            defaultValue={email || 'pochta@yandex.ru'}
-            required="true"
-            minLength={2}
-            maxLength={40}
+            id="email"
+            form="profile"
+            className={`profile__input input-focus input-placeholder ${
+              errors.email && 'profile__input_style_error'
+            }`}
+            value={values.email || ''}
+            disabled={isEditing ? false : true}
+            required
             placeholder="Введите Email"
           />
         </fieldset>
       </form>
-      <button type="button" className="profile__edit-button link-hover">
-        Редактировать
-      </button>
-      <Link to="/sign-out" className="profile__exit-button link-hover">
-        Выйти из аккаунта
-      </Link>
+      {isEditing ? (
+        <div profile__link-container>
+          <button type="button" className="profile__edit-button link-hover" onClick={handleEditClick}>
+            Редактировать
+          </button>
+          <Link to="/sign-out" className="profile__exit-button link-hover" onClick={onSignOut}>
+            Выйти из аккаунта
+          </Link>
+        </div>
+      ) : (
+        <button
+          type="submit"
+          form="profile"
+          className="profile__submit-button button-hover"
+          disabled={handleButtonDisable}
+        >
+          Сохранить
+        </button>
+      )}
     </main>
   );
 };

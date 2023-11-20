@@ -4,12 +4,16 @@ import './Navigation.css';
 import { useState, useEffect } from 'react';
 
 const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const location = useLocation();
 
   const toogleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -22,7 +26,7 @@ const Navigation = () => {
           className={`navigation__close-button button-hover ${
             isMenuOpen ? 'navigation__close-button_menu-opened' : ''
           }`}
-          onClick={toogleMenu}
+          onClick={closeMenu}
         ></button>
         <div className="navigation__movies-container">
           {isMenuOpen ? (

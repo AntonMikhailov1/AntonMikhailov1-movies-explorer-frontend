@@ -3,7 +3,6 @@ import './Header.css';
 import logo from '../../images/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 
-import { isLoggedIn } from '../App/App.jsx';
 import Navigation from '../Navigation/Navigation.jsx';
 
 const Header = ({ isLoggedIn }) => {

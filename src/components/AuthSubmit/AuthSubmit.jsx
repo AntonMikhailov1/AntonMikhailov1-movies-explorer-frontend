@@ -1,10 +1,17 @@
 import './AuthSubmit.css';
 import { Link } from 'react-router-dom';
 
-const AuthSubmit = ({ formName, sumbitButtonText }) => {
+const AuthSubmit = ({ formName, sumbitButtonText, isFormValid }) => {
+  const handleButtonDisable = () => (isFormValid ? false : true);
+
   return (
     <div className="auth-submit">
-      <button type="submit" form={formName} className="auth-submit__button button-hover">
+      <button
+        type="submit"
+        form={formName}
+        className="auth-submit__button button-hover"
+        disabled={handleButtonDisable}
+      >
         {sumbitButtonText}
       </button>
       {formName === 'register' ? (
