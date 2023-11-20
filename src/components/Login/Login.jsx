@@ -8,12 +8,16 @@ import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthSubmit from '../AuthSubmit/AuthSubmit.jsx';
 
 const Login = ({ onLogin, onLoading, isLoggedIn }) => {
-  const { values, errors, isFormValid, onChange } = useFormValidation();
+  const { values, errors, isFormValid, handleChange, resetValidation } = useFormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(values);
   }
+
+  useEffect(() => {
+    resetValidation();
+  }, [resetValidation]);
 
   return isLoggedIn ? (
     <Navigate to="/" replace />
@@ -39,7 +43,7 @@ const Login = ({ onLogin, onLoading, isLoggedIn }) => {
             required
             id="email"
             disabled={onLoading ? true : false}
-            onChange={onChange}
+            onChange={handleChange}
             value={values.email || ''}
             placeholder="Введите Email"
           />
@@ -63,7 +67,7 @@ const Login = ({ onLogin, onLoading, isLoggedIn }) => {
             minLength="6"
             maxLength="30"
             disabled={onLoading ? true : false}
-            onChange={onChange}
+            onChange={handleChange}
             value={values.password || ''}
             placeholder="Введите пароль"
           />

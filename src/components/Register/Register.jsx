@@ -9,12 +9,17 @@ import AuthSubmit from '../AuthSubmit/AuthSubmit.jsx';
 
 
 const Register = ({ onRegister, onLoading, isLoggedIn }) => {
-  const { values, errors, isFormValid, onChange } = useFormValidation();
+  const { values, errors, isFormValid, handleChange, resetValidation } = useFormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     onRegister(values);
   }
+
+  useEffect(() => {
+    resetValidation();
+  }, [resetValidation]);
+  
 
   return isLoggedIn ? (
     <Navigate to="/" replace />
@@ -42,8 +47,8 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
             minLength="2"
             maxLength="30"
             disabled={onLoading ? true : false}
-            onChange={onChange}
-            value={values.email || ''}
+            onChange={handleChange}
+            value={values.name || ''}
             placeholder="Введите имя"
           />
           <span
@@ -66,7 +71,7 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
             form="register"
             required
             disabled={onLoading ? true : false}
-            onChange={onChange}
+            onChange={handleChange}
             value={values.email || ''}
             placeholder="Введите Email"
           />
@@ -92,7 +97,7 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
             minLength="6"
             maxLength="30"
             disabled={onLoading ? true : false}
-            onChange={onChange}
+            onChange={handleChange}
             value={values.password || ''}
             placeholder="Введите пароль"
           />
@@ -105,7 +110,11 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
           </span>
         </label>
       </form>
-      <AuthSubmit formName="register" sumbitButtonText="Зарегистрироваться" />
+      <AuthSubmit
+        formName="register"
+        sumbitButtonText="Зарегистрироваться"
+        isFormValid={isFormValid}
+      />
     </main>
   );
 };

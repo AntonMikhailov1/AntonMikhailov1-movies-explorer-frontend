@@ -26,7 +26,7 @@ const MoviesCardList = ({ movies,
         });
         setMoviesForRenderList(result);
       }
-    }, [location.pathname, cards, renderParams]);
+    }, [location.pathname, movies, renderParams]);
 
     useEffect(() => {
       if (location.pathname === "/saved-movies") {
@@ -40,7 +40,7 @@ const MoviesCardList = ({ movies,
       const remainingMovies = movies.length - moviesLength;
       if (remainingMovies > 0) {
         const additionalMovies = movies.slice(moviesLength, moviesLengthTotal);
-        setMoviesForRenderList([...moviesForRenderList, ...additionalCards]);
+        setMoviesForRenderList([...moviesForRenderList, ...additionalMovies]);
       }
     }
 
@@ -53,11 +53,11 @@ const MoviesCardList = ({ movies,
           <ul
             className="movies-card-list"
           >
-            {moviesForRenderList.map((card) => (
+            {moviesForRenderList.map((movie) => (
               <MoviesCard
-                card={card}
-                key={card.id || card._id}
-                isSaved={handleSavedStatus(savedMovies, card)}
+                movie={movie}
+                key={movie.id || movie._id}
+                isSaved={handleSavedStatus(savedMovies, movie)}
                 onMovieSave={onMovieSave}
                 onMovieDelete={onMovieDelete}
               />

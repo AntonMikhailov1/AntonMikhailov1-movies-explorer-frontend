@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import isEmail from "validator/es/lib/isEmail";
 
-function useFormWithValidation() {
+function useFormValidation() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isFormValid, setFormValid] = useState(false);
@@ -43,4 +43,4 @@ function useFormWithValidation() {
   };
 }
 
-export default useFormWithValidation;
+export default useFormValidation;
