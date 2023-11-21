@@ -30,8 +30,36 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  const handleUserLogin = useCallback(
-    async ({ email, password }) => {
+  async function handleUserUpdate({ name, email }) {
+    setLoading(true);
+    try {
+      const userData = await mainApi.updateUserInfo({ name, email });
+      if (userData) {
+        setCurrentUser(userData);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleUserSignUp({ name, email, password }) {
+      setLoading(true);
+      try {
+        const userData = await mainApi.signup({ name, email, password });
+        if (userData) {
+          handleUserLogin({ email, password });
+          navigate('/', { replace: true });
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function handleUserLogin({ email, password }) {
       setLoading(true);
       try {
         const userData = await mainApi.login({ email, password });
@@ -44,29 +72,9 @@ const App = () => {
       } finally {
         setLoading(false);
       }
-    },
-    [navigate]
-  );
+    }
 
-  const handleUserSignUp = useCallback(
-    async ({ name, email, password }) => {
-      setLoading(true);
-      try {
-        const userData = await mainApi.signup({ name, email, password });
-        if (userData) {
-          handleUserLogin({ email, password });
-          navigate('/signin', { replace: true });
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [navigate, handleUserLogin]
-  );
-
-  const handleUserSignOut = useCallback(async () => {
+  async function handleUserSignOut() {
     try {
       const data = await mainApi.signout();
       if (data) {
@@ -74,12 +82,11 @@ const App = () => {
         setCurrentUser({});
         setSavedMovies([]);
         localStorage.clear();
-        navigate('/', { replace: true });
       }
     } catch (err) {
       console.log(err);
     }
-  }, [navigate]);
+  }
 
   const handleGetUser = useCallback(async () => {
     try {
@@ -95,21 +102,7 @@ const App = () => {
     }
   }, []);
 
-  const handleUserUpdate = useCallback(async ({ name, email }) => {
-    setLoading(true);
-    try {
-      const userData = await mainApi.updateUserInfo();
-      if (userData) {
-        setCurrentUser(userData);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setPreloaderClass(false);
-    }
-  }, []);
-
-  const handleGetAllMovies = useCallback(async () => {
+  async function handleGetAllMovies() {
     setLoading(true);
     try {
       const moviesData = await moviesApi.getMoviesFromExternalApi();
@@ -121,10 +114,9 @@ const App = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }
 
   const handleGetSavedMovies = useCallback(async () => {
-    setLoading(true);
     try {
       const moviesData = await mainApi.getMovies();
       if (moviesData) {
@@ -132,13 +124,10 @@ const App = () => {
       }
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   }, []);
 
-  const handleSaveMovie = useCallback(
-    async (movie) => {
+  async function handleSaveMovie(movie) {
       try {
         const movieData = await mainApi.createMovie({
           country: movie.country,
@@ -159,12 +148,9 @@ const App = () => {
       } catch (err) {
         console.error(err);
       }
-    },
-    [savedMovies]
-  );
+    }
 
-  const handleDeleteMovie = useCallback(
-    async (movie) => {
+  async function handleDeleteMovie(movie) {
       const savedMovie = savedMovies.find(
         (item) => item.movieId === movie.id || item.movieId === movie.movieId
       );
@@ -179,19 +165,17 @@ const App = () => {
       } catch (err) {
         console.error(err);
       }
-    },
-    [savedMovies]
-  );
-
-  useEffect(() => {
-    handleGetUser();
-  }, [isLoggedIn, handleGetUser]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      handleGetSavedMovies();
     }
-  }, [isLoggedIn, handleGetSavedMovies]);
+
+    useEffect(() => {
+      handleGetUser();
+    }, [isLoggedIn, handleGetUser]);
+
+    useEffect(() => {
+      if (isLoggedIn) {
+        handleGetSavedMovies();
+      }
+    }, [isLoggedIn, handleGetSavedMovies]);
 
   return (
     <div className="app">

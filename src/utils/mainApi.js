@@ -1,8 +1,20 @@
 import { MAIN_API_URL } from './constants';
-import { apiRequest } from './utils'
+
+const apiRequest = (endpoint, method, body) => {
+  const headers = { "Content-Type": "application/json" };
+  const config = { method, headers, credentials: "include" };
+  if (body !== undefined) {
+    config.body = JSON.stringify(body);
+  }
+  return fetch(`${MAIN_API_URL}${endpoint}`, config).then((res) => {
+    return res.ok
+      ? res.json()
+      : Promise.reject(`Ошибка: ${res.status}`);
+  });
+}
 
 function signup({  name, email, password }) {
-  return apiRequest(MAIN_API_URL, '/signup', 'POST', true, {
+  return apiRequest('/signup', 'POST', {
     name,
     email,
     password,
@@ -10,29 +22,29 @@ function signup({  name, email, password }) {
 }
 
 function login({ email, password }) {
-  return apiRequest(MAIN_API_URL, '/signin', 'POST', true, {
+  return apiRequest('/signin', 'POST', {
     email,
     password,
   });
 }
 
 function signout() {
-  return apiRequest(MAIN_API_URL, '/signout', 'POST', true);
+  return apiRequest('/signout', 'POST');
 }
 
 function getUser() {
-  return apiRequest(MAIN_API_URL, '/users/me', 'GET', true);
+  return apiRequest('/users/me', 'GET');
 }
 
 function updateUserInfo({ name, email }) {
-  return apiRequest(MAIN_API_URL, '/users/me', 'PATCH', true, {
+  return apiRequest('/users/me', 'PATCH', {
     name,
     email,
   });
 }
 
 function getMovies() {
-  return apiRequest(MAIN_API_URL, '/movies', 'GET', true);
+  return apiRequest('/movies', 'GET');
 }
 
 function createMovie({
@@ -45,10 +57,10 @@ function createMovie({
   trailerLink,
   thumbnail,
   movieId,
-  nameRu,
-  nameEn,
+  nameRU,
+  nameEN,
 }) {
-  return apiRequest(MAIN_API_URL, '/movies', 'POST', true, {
+  return apiRequest('/movies', 'POST', {
     country,
     director,
     duration,
@@ -58,13 +70,13 @@ function createMovie({
     trailerLink,
     thumbnail,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   });
 }
 
 function deleteMovie(id) {
-  return apiRequest(MAIN_API_URL, `/movies/${id}`, 'DELETE', true);
+  return apiRequest(`/movies/${id}`, 'DELETE');
 }
 
 export {

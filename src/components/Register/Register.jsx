@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation.js';
 
@@ -6,7 +7,6 @@ import '../../styles/form.css';
 
 import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthSubmit from '../AuthSubmit/AuthSubmit.jsx';
-
 
 const Register = ({ onRegister, onLoading, isLoggedIn }) => {
   const { values, errors, isFormValid, handleChange, resetValidation } = useFormValidation();
@@ -94,7 +94,7 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
             id="password"
             form="register"
             required
-            minLength="6"
+            minLength="4"
             maxLength="30"
             disabled={onLoading ? true : false}
             onChange={handleChange}

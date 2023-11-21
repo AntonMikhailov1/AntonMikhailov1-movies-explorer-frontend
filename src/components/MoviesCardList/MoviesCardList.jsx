@@ -16,7 +16,7 @@ const MoviesCardList = ({ movies,
   onMovieDelete,
   isLoading }) => {
 
-    const [moviesForRenderList, setMoviesForRenderList] = useState([]);
+    const [moviesForRenderList, setMoviesForRender] = useState([]);
     const location = useLocation();
 
     useEffect(() => {
@@ -24,13 +24,13 @@ const MoviesCardList = ({ movies,
         const result = movies.filter((movie, index) => {
           return index < renderParams.total;
         });
-        setMoviesForRenderList(result);
+        setMoviesForRender(result);
       }
     }, [location.pathname, movies, renderParams]);
 
     useEffect(() => {
       if (location.pathname === "/saved-movies") {
-        setMoviesForRenderList(movies);
+        setMoviesForRender(movies);
       }
     }, [location.pathname, movies]);
 
@@ -40,13 +40,12 @@ const MoviesCardList = ({ movies,
       const remainingMovies = movies.length - moviesLength;
       if (remainingMovies > 0) {
         const additionalMovies = movies.slice(moviesLength, moviesLengthTotal);
-        setMoviesForRenderList([...moviesForRenderList, ...additionalMovies]);
+        setMoviesForRender([...moviesForRenderList, ...additionalMovies]);
       }
     }
 
   return (
     <>
-      {!localStorage.getItem("searchQuery") && movies.length === 0 && null}
       {isLoading && movies.length === 0 && <Preloader />}
       {movies.length !== 0 && !isMoviesNotFound && (
         <>
@@ -66,7 +65,7 @@ const MoviesCardList = ({ movies,
           {moviesForRenderList.length >= 5 &&
             moviesForRenderList.length < movies.length && (
               <button
-                className="movies-card-list__more-button hover-button"
+                className="movies-card-list__more-button button-hover"
                 type="button"
                 onClick={handleMoreButtonClick}
               >

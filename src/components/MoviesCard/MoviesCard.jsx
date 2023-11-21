@@ -21,18 +21,20 @@ const MoviesCard = ({ movie, isSaved, onMovieSave, onMovieDelete }) => {
     <li className="movies-card">
       <a href={movie.trailerLink} target="_blank" rel="noreferrer">
         <img
-                    src={
-                      location.pathname === "/movies"
-                        ? `${MOVIES_API_URL}${movie.image.url}`
-                        : `${movie.image}`
-                    }
-                    alt={`Постер фильма ${movie.nameRu}`}
+          src={
+            location.pathname === '/movies'
+              ? `${MOVIES_API_URL}${movie.image.url}`
+              : `${movie.image}`
+          }
+          alt={`Постер фильма ${movie.nameRU}`}
           className="movies-card__thumbnail link-hover"
         />
       </a>
       <div className="movies-card__text-group">
-        <p className="movies-card__title">{movie.nameRu}</p>
-        <p className="movies-card__duration">{convertDuration(movie.duration)}</p>
+        <p className="movies-card__title">{movie.nameRU}</p>
+        <p className="movies-card__duration">
+          {convertDuration(movie.duration)}
+        </p>
       </div>
       {location.pathname === '/movies' ? (
         <button

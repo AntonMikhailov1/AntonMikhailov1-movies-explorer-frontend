@@ -32,6 +32,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
   function handleSubmit(e) {
     e.preventDefault();
     onUserUpdate(values);
+    setEditingStatus(!isEditing);
   }
 
   return (
@@ -75,6 +76,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             className={`profile__input input-focus input-placeholder ${
               errors.email && 'profile__input_style_error'
             }`}
+            onChange={handleChange}
             value={values.email || ''}
             disabled={isEditing ? false : true}
             required
@@ -82,25 +84,35 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
           />
         </fieldset>
       </form>
-      {isEditing ? (
-        <div profile__link-container>
-          <button type="button" className="profile__edit-button link-hover" onClick={handleEditClick}>
-            Редактировать
+      <>
+        {!isEditing ? (
+          <div profile__link-container>
+            <button
+              type="button"
+              className="profile__edit-button link-hover"
+              onClick={handleEditClick}
+            >
+              Редактировать
+            </button>
+            <Link
+              to="/"
+              className="profile__exit-button link-hover"
+              onClick={onSignOut}
+            >
+              Выйти из аккаунта
+            </Link>
+          </div>
+        ) : (
+          <button
+            type="submit"
+            form="profile"
+            className="profile__submit-button button-hover"
+            disabled={handleButtonDisable}
+          >
+            Сохранить
           </button>
-          <Link to="/sign-out" className="profile__exit-button link-hover" onClick={onSignOut}>
-            Выйти из аккаунта
-          </Link>
-        </div>
-      ) : (
-        <button
-          type="submit"
-          form="profile"
-          className="profile__submit-button button-hover"
-          disabled={handleButtonDisable}
-        >
-          Сохранить
-        </button>
-      )}
+        )}
+      </>
     </main>
   );
 };

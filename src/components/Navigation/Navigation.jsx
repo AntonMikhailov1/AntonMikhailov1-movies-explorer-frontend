@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 import './Navigation.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Navigation = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);

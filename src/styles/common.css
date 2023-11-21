@@ -70,14 +70,16 @@ body {
 
 .link-hover:hover {
   opacity: 0.7;
+  transition: opacity 0.3s;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition-delay: 250ms;
 }
 
 .button-hover:hover {
   opacity: 0.8;
+  transition: opacity 0.3s;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition-delay: 250ms;
 }
 
 .input-focus:focus {

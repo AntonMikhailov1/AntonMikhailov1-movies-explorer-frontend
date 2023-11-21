@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation.js';
 
@@ -64,7 +65,7 @@ const Login = ({ onLogin, onLoading, isLoggedIn }) => {
             id="password"
             form="login"
             required
-            minLength="6"
+            minLength="4"
             maxLength="30"
             disabled={onLoading ? true : false}
             onChange={handleChange}

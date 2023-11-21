@@ -91,11 +91,6 @@ const Movies = ({
       setRenderParams(RENDER_CONFIG.base.cards);
     } else if (
       screenWidth < RENDER_CONFIG.base.width &&
-      screenWidth >= RENDER_CONFIG.desktop.width
-    ) {
-      setRenderParams(RENDER_CONFIG.desktop.cards);
-    } else if (
-      screenWidth < RENDER_CONFIG.desktop.width &&
       screenWidth >= RENDER_CONFIG.tablet.width
     ) {
       setRenderParams(RENDER_CONFIG.tablet.cards);
@@ -143,9 +138,6 @@ const Movies = ({
         onMovieDelete={onMovieDelete}
         isLoading={isLoading}
       />
-      <button type="button" className="movies__more-button button-hover">
-        Ещё
-      </button>
     </main>
   );
 };

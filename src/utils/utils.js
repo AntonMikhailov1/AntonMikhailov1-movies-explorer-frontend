@@ -1,19 +1,3 @@
-function apiRequest(apiUrl, endpoint, method, credentials, body) {
-  const headers = { 'Content-Type': 'application/json' };
-  const config = { method, headers };
-  if (credentials) {
-    config.credentials = 'include';
-  }
-  if (body !== undefined) {
-    config.body = JSON.stringify(body);
-  }
-  return fetch(`${apiUrl}${endpoint}`, config).then((res) => {
-    return res.ok
-      ? res.json()
-      : res.json().then((err) => Promise.reject(`Ошибка: ${err.message}`));
-  });
-}
-
 function convertDuration(duration) {
   const oneHour = 60;
   const minutes = duration % oneHour;
@@ -65,4 +49,4 @@ function handleSavedStatus(savedCards, movieCard) {
   });
 }
 
-export { apiRequest, convertDuration, handleMovieFiltering, handleMovieSearch, handleSavedStatus };
+export { convertDuration, handleMovieFiltering, handleMovieSearch, handleSavedStatus };

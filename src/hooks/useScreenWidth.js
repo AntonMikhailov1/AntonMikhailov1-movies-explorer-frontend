@@ -10,7 +10,7 @@ function useScreenWidth() {
       setScreenWidth(getScreenWidth());
     };
 
-    window.addEventListener('resize', resizeController, false); // при монтировании ставим обработчик
+    window.addEventListener('resize', resizeController, false);
 
     let resizeTimer;
 
@@ -19,11 +19,11 @@ function useScreenWidth() {
         resizeTimer = setTimeout(() => {
           resizeTimer = null;
           handleScreenResize();
-        }, 1000); // 1 кадр в секунду
+        }, 1000);
       }
     };
 
-    return () => window.removeEventListener('resize', handleScreenResize);  // убираем при размонтировании
+    return () => window.removeEventListener('resize', handleScreenResize);
   }, [getScreenWidth]);
 
   return screenWidth;
