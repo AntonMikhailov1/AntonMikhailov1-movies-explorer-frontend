@@ -72,6 +72,14 @@
   height: 21px;
 }
 
+.movies-card__like-button:disabled {
+  cursor: default;
+}
+
+.movies-card__like-button:disabled:hover {
+  opacity: 1;
+}
+
 .movies-card__delete-button {
   background-image: url('../../images/delete-button.svg');
   background-position: center;

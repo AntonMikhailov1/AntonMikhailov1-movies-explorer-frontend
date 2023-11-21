@@ -9,16 +9,18 @@ function convertDuration(duration) {
   }
 }
 
-function handleMovieFiltering(movies, isFilterOn, isSavedMovies) {
+function handleMovieFiltering(movies, isFilterChecked, isSavedMovies) {
   const shortMovieDuration = 40;
   if (!isSavedMovies) {
-    localStorage.setItem('isMoviesFilterOn', isFilterOn);
+    localStorage.setItem('isMoviesFilterChecked', isFilterChecked);
   } else {
-    localStorage.setItem('isSavedMoviesFilterOn', isFilterOn);
+    localStorage.setItem('isSavedMoviesFilterChecked', isFilterChecked);
   }
-  if (isFilterOn) {
-    const result = movies.filter((movie) => movie.duration <= shortMovieDuration);
-    return result;
+  if (isFilterChecked) {
+    const shortMovies = movies.filter(
+      (movie) => movie.duration <= shortMovieDuration
+    );
+    return shortMovies;
   } else {
     return movies;
   }
@@ -26,7 +28,7 @@ function handleMovieFiltering(movies, isFilterOn, isSavedMovies) {
 
 function handleMovieSearch(movies, searchQuery, isSavedMovies) {
   const normalizeSearchQuery = searchQuery.toLowerCase().trim();
-  const result = movies.filter((movie) => {
+  const normalizeMovieNames = movies.filter((movie) => {
     const normalizeNameRu = movie.nameRU.toLowerCase().trim();
     const normalizeNameEn = movie.nameEN.toLowerCase().trim();
     return (
@@ -35,18 +37,23 @@ function handleMovieSearch(movies, searchQuery, isSavedMovies) {
     );
   });
   if (!isSavedMovies) {
-    localStorage.setItem('foundMovies', JSON.stringify(result));
+    localStorage.setItem('foundMovies', JSON.stringify(normalizeMovieNames));
     localStorage.setItem('moviesSearchQuery', normalizeSearchQuery);
   } else {
     localStorage.setItem('savedMoviesSearchQuery', normalizeSearchQuery);
   }
-  return result;
+  return normalizeMovieNames;
 }
 
-function handleSavedStatus(savedCards, movieCard) {
-  return savedCards.find((card) => {
-    return card.movieId === (movieCard.id || movieCard.movieId);
-  });
+function getSavedStatus(savedMovies, movieCard) {
+  return savedMovies.find(
+    (movie) => movie.movieId === (movieCard.id || movieCard.movieId)
+  );
 }
 
-export { convertDuration, handleMovieFiltering, handleMovieSearch, handleSavedStatus };
+export {
+  convertDuration,
+  handleMovieFiltering,
+  handleMovieSearch,
+  getSavedStatus,
+};

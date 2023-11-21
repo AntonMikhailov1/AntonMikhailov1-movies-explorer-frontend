@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import isEmail from "validator/es/lib/isEmail";
+import { useCallback, useState } from 'react';
+import isEmail from 'validator/es/lib/isEmail';
 
 function useFormValidation() {
   const [values, setValues] = useState({});
@@ -9,20 +9,18 @@ function useFormValidation() {
   function handleChange(e) {
     const target = e.target;
     const { value, name } = target;
-    if (name === "name" && target.validity.patternMismatch) {
+    if (name === 'name' && target.validity.patternMismatch) {
       target.setCustomValidity(
-        "Имя должно содержать только кириллицу, латиницу, пробел или дефис."
+        'Имя должно содержать только кириллицу, латиницу, пробел или дефис.'
       );
-    } else if (name === "email" && !isEmail(value)) {
-      target.setCustomValidity(
-        "Необходимо указать корректный e-mail"
-      );
+    } else if (name === 'email' && !isEmail(value)) {
+      target.setCustomValidity('Необходимо указать корректный e-mail');
     } else {
-      target.setCustomValidity("");
+      target.setCustomValidity('');
     }
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
-    setFormValid(target.closest("form").checkValidity());
+    setFormValid(target.closest('form').checkValidity());
   }
 
   const resetValidation = useCallback(

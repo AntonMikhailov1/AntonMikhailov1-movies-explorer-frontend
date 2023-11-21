@@ -11,7 +11,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
   const [isCurrentUser, setCurrentUser] = useState(true);
   const [isEditing, setEditingStatus] = useState(false);
   const { values, errors, isFormValid, handleChange, resetValidation } =
-  useFormValidation();
+    useFormValidation();
 
   useEffect(() => {
     currentUser.name !== values.name || currentUser.email !== values.email
@@ -27,7 +27,9 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
     setEditingStatus(!isEditing);
   }
 
-  const handleButtonDisable = () => isFormValid && !isCurrentUser ? false : true;
+  function handleDisable() {
+    return isFormValid && !isCurrentUser ? false : true;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -54,7 +56,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             id="name"
             form="profile"
             className={`profile__input input-focus input-placeholder ${
-              errors.name && 'profile__input_style_error'
+              errors.name ? 'profile__input_style_error' : ''
             }`}
             onChange={handleChange}
             value={values.name || ''}
@@ -63,7 +65,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             minLength={2}
             maxLength={30}
             placeholder="Введите имя"
-            pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
+            pattern="^[A-Za-zА-Яа-яЁё\\-\\s]+$"
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -74,19 +76,24 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             id="email"
             form="profile"
             className={`profile__input input-focus input-placeholder ${
-              errors.email && 'profile__input_style_error'
+              errors.email ? 'profile__input_style_error' : ''
             }`}
             onChange={handleChange}
             value={values.email || ''}
             disabled={isEditing ? false : true}
             required
             placeholder="Введите Email"
+            minLength={2}
+            maxLength={30}
           />
         </fieldset>
       </form>
+      <span className="profile__error-message">
+        {errors.name || errors.email || ''}
+      </span>
       <>
         {!isEditing ? (
-          <div profile__link-container>
+          <div className="profile__link-container">
             <button
               type="button"
               className="profile__edit-button link-hover"
@@ -107,7 +114,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             type="submit"
             form="profile"
             className="profile__submit-button button-hover"
-            disabled={handleButtonDisable}
+            disabled={handleDisable()}
           >
             Сохранить
           </button>

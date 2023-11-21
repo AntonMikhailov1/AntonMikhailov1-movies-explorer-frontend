@@ -1,19 +1,23 @@
 import { MAIN_API_URL } from './constants';
 
 const apiRequest = (endpoint, method, body) => {
-  const headers = { "Content-Type": "application/json" };
-  const config = { method, headers, credentials: "include" };
+  const headers = { 'Content-Type': 'application/json' };
+  const config = { method, headers, credentials: 'include' };
   if (body !== undefined) {
     config.body = JSON.stringify(body);
   }
   return fetch(`${MAIN_API_URL}${endpoint}`, config).then((res) => {
     return res.ok
       ? res.json()
-      : Promise.reject(`Ошибка: ${res.status}`);
+      : res.json().then((err) => {
+          return Promise.reject(
+            `Ошибка ${res.status}: ${err.message || err.error}`
+          );
+        });
   });
-}
+};
 
-function signup({  name, email, password }) {
+function signup({ name, email, password }) {
   return apiRequest('/signup', 'POST', {
     name,
     email,
@@ -43,11 +47,11 @@ function updateUserInfo({ name, email }) {
   });
 }
 
-function getMovies() {
+function getSavedMovies() {
   return apiRequest('/movies', 'GET');
 }
 
-function createMovie({
+function saveMovie({
   country,
   director,
   duration,
@@ -85,7 +89,7 @@ export {
   signout,
   getUser,
   updateUserInfo,
-  getMovies,
-  createMovie,
-  deleteMovie
-}
+  getSavedMovies,
+  saveMovie,
+  deleteMovie,
+};

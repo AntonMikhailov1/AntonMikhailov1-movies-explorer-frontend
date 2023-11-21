@@ -2,9 +2,9 @@ import { useLocation } from 'react-router-dom';
 
 import './MoviesCard.css';
 
-import { convertDuration } from "../../utils/utils";
+import { convertDuration } from '../../utils/utils';
 
-import { MOVIES_API_URL } from "../../utils/constants";
+import { MOVIES_API_URL } from '../../utils/constants';
 
 const MoviesCard = ({ movie, isSaved, onMovieSave, onMovieDelete }) => {
   const location = useLocation();
@@ -41,6 +41,7 @@ const MoviesCard = ({ movie, isSaved, onMovieSave, onMovieDelete }) => {
           className={`movies-card__like-button button-hover ${
             isSaved ? 'movies-card__like-button_active' : ''
           }`}
+          disabled={isSaved}
           type="button"
           onClick={handleSaveClick}
         />

@@ -5,10 +5,9 @@ function useScreenWidth() {
   const [screenWidth, setScreenWidth] = useState(getScreenWidth());
 
   useEffect(() => {
-
     function handleScreenResize() {
       setScreenWidth(getScreenWidth());
-    };
+    }
 
     window.addEventListener('resize', resizeController, false);
 
@@ -21,7 +20,7 @@ function useScreenWidth() {
           handleScreenResize();
         }, 1000);
       }
-    };
+    }
 
     return () => window.removeEventListener('resize', handleScreenResize);
   }, [getScreenWidth]);

@@ -5,9 +5,14 @@ import './SearchForm.css';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox.jsx';
 
-const SearchForm = ({ onSearch, onFilterChange, isFilterOn, isSearching }) => {
+const SearchForm = ({
+  onSearch,
+  onFilterChange,
+  isFilterChecked,
+  isSearching,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [queryError, setQueryError] = useState('');
+  const [searchQueryError, setSearchQueryError] = useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -17,7 +22,8 @@ const SearchForm = ({ onSearch, onFilterChange, isFilterOn, isSearching }) => {
     ) {
       const savedSearchQuery = localStorage.getItem('moviesSearchQuery');
       setSearchQuery(savedSearchQuery);
-    } else if (
+    }
+    if (
       location.pathname === '/saved-movies' &&
       localStorage.getItem('savedMoviesSearchQuery')
     ) {
@@ -27,18 +33,20 @@ const SearchForm = ({ onSearch, onFilterChange, isFilterOn, isSearching }) => {
   }, [location.pathname]);
 
   useEffect(() => {
-    setQueryError('');
+    setSearchQueryError('');
   }, [searchQuery]);
+
+  function handleSubmitError() {
+    setSearchQueryError('Нужно ввести ключевое слово');
+    setTimeout(() => setSearchQueryError(''), 1000);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (location.pathname === '/movies') {
-      searchQuery
-        ? onSearch(searchQuery)
-        : setQueryError('Нужно ввести ключевое слово');
-    } else {
-      onSearch(searchQuery);
+      searchQuery ? onSearch(searchQuery) : handleSubmitError();
     }
+    onSearch(searchQuery);
   }
 
   return (
@@ -73,11 +81,11 @@ const SearchForm = ({ onSearch, onFilterChange, isFilterOn, isSearching }) => {
             >
               Найти
             </button>
-            <span className="search__search-error">{queryError}</span>
+            <span className="search__search-error">{searchQueryError}</span>
           </div>
           <FilterCheckbox
             onFilterChange={onFilterChange}
-            isFilterOn={isFilterOn}
+            isFilterChecked={isFilterChecked}
             isSearching={isSearching}
           />
         </form>

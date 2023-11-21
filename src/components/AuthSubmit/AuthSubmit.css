@@ -39,7 +39,7 @@
 }
 
 .auth-submit__button:disabled {
-  color: #e8e8e8;
+  background-color: #e8e8e8;
   pointer-events: none;
 }
 

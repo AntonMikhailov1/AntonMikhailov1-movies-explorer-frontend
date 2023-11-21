@@ -1,6 +1,6 @@
 import './FilterCheckbox.css';
 
-const FilterCheckbox = ({ onFilterChange, isFilterOn, isSearching }) => {
+const FilterCheckbox = ({ onFilterChange, isFilterChecked, isSearching }) => {
   return (
     <label className="filter-checkbox">
       <input
@@ -8,13 +8,13 @@ const FilterCheckbox = ({ onFilterChange, isFilterOn, isSearching }) => {
         name="filter"
         type="checkbox"
         disabled={isSearching ? true : false}
-        checked={isFilterOn}
+        checked={isFilterChecked}
         onChange={(evt) => onFilterChange(evt.target.checked)}
       />
       <span className="filter-checkbox__tumbler"></span>
       <span className="filter-checkbox__text">Короткометражки</span>
     </label>
   );
-}
+};
 
 export default FilterCheckbox;

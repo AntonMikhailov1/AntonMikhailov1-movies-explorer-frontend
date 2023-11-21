@@ -9,7 +9,8 @@ import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthSubmit from '../AuthSubmit/AuthSubmit.jsx';
 
 const Register = ({ onRegister, onLoading, isLoggedIn }) => {
-  const { values, errors, isFormValid, handleChange, resetValidation } = useFormValidation();
+  const { values, errors, isFormValid, handleChange, resetValidation } =
+    useFormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -19,7 +20,6 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
   useEffect(() => {
     resetValidation();
   }, [resetValidation]);
-  
 
   return isLoggedIn ? (
     <Navigate to="/" replace />
@@ -37,7 +37,7 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
           Имя
           <input
             className={`form__input input-focus input-placeholder ${
-              errors.email ? 'form__input_style_error' : ''
+              errors.name ? 'form__input_style_error' : ''
             }`}
             type="text"
             name="name"
@@ -87,7 +87,7 @@ const Register = ({ onRegister, onLoading, isLoggedIn }) => {
           Пароль
           <input
             className={`form__input input-focus input-placeholder ${
-              errors.email ? 'form__input_style_error' : ''
+              errors.password ? 'form__input_style_error' : ''
             }`}
             type="password"
             name="password"

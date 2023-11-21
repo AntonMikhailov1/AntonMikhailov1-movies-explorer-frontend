@@ -20,12 +20,25 @@ const Movies = ({
   const [initialMoviesList, setInitialMoviesList] = useState([]);
   const [moviesForRenderList, setMoviesForRenderList] = useState([]);
   const [foundMoviesList, setFoundMoviesList] = useState([]);
-  const [isFilterOn, setFilter] = useState(false);
+  const [isFilterChecked, setFilter] = useState(false);
   const [isMoviesNotFound, setMoviesNotFound] = useState(false);
   const [renderParams, setRenderParams] = useState({});
   const [isSearching, setIsSearching] = useState(false);
 
   const screenWidth = useScreenWidth();
+
+  useEffect(() => {
+    if (screenWidth >= RENDER_CONFIG.base.width) {
+      setRenderParams(RENDER_CONFIG.base.cards);
+    }
+    if (
+      screenWidth < RENDER_CONFIG.base.width &&
+      screenWidth >= RENDER_CONFIG.tablet.width
+    ) {
+      setRenderParams(RENDER_CONFIG.tablet.cards);
+    }
+    setRenderParams(RENDER_CONFIG.mobile.cards);
+  }, [screenWidth]);
 
   const handleSearchAndFiltering = useCallback(
     (movies, searchQuery) => {
@@ -38,7 +51,7 @@ const Movies = ({
       } else {
         const filteredMovies = handleMovieFiltering(
           foundMovies,
-          isFilterOn,
+          isFilterChecked,
           false
         );
         setIsSearching(false);
@@ -49,7 +62,7 @@ const Movies = ({
         }
       }
     },
-    [isFilterOn]
+    [isFilterChecked]
   );
 
   const handleSearchSubmit = useCallback(
@@ -87,32 +100,25 @@ const Movies = ({
   );
 
   useEffect(() => {
-    if (screenWidth >= RENDER_CONFIG.base.width) {
-      setRenderParams(RENDER_CONFIG.base.cards);
-    } else if (
-      screenWidth < RENDER_CONFIG.base.width &&
-      screenWidth >= RENDER_CONFIG.tablet.width
-    ) {
-      setRenderParams(RENDER_CONFIG.tablet.cards);
-    } else {
-      setRenderParams(RENDER_CONFIG.mobile.cards);
-    }
-  }, [screenWidth]);
-
-  useEffect(() => {
     if (
       localStorage.getItem('foundMovies') &&
-      localStorage.getItem('isMoviesFilterOn')
+      localStorage.getItem('isMoviesFilterChecked')
     ) {
-      const filter = JSON.parse(localStorage.getItem('isMoviesFilterOn'));
-      setFilter(filter);
+      const filterStatus = JSON.parse(
+        localStorage.getItem('isMoviesFilterChecked')
+      );
+      setFilter(filterStatus);
       const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
       setFoundMoviesList(foundMovies);
       if (!foundMovies.length) {
         setMoviesNotFound(true);
         setMoviesForRenderList(foundMovies);
       } else {
-        const filteredMovies = handleMovieFiltering(foundMovies, filter, false);
+        const filteredMovies = handleMovieFiltering(
+          foundMovies,
+          filterStatus,
+          false
+        );
         setMoviesForRenderList(filteredMovies);
         if (!filteredMovies.length) {
           setMoviesNotFound(true);
@@ -126,7 +132,7 @@ const Movies = ({
       <SearchForm
         onSearch={handleSearchSubmit}
         onFilterChange={handleFilterCheck}
-        isFilterOn={isFilterOn}
+        isFilterChecked={isFilterChecked}
         isSearching={isSearching}
       />
       <MoviesCardList

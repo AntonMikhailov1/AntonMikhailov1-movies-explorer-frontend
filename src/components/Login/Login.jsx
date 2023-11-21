@@ -9,7 +9,8 @@ import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthSubmit from '../AuthSubmit/AuthSubmit.jsx';
 
 const Login = ({ onLogin, onLoading, isLoggedIn }) => {
-  const { values, errors, isFormValid, handleChange, resetValidation } = useFormValidation();
+  const { values, errors, isFormValid, handleChange, resetValidation } =
+    useFormValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -59,7 +60,9 @@ const Login = ({ onLogin, onLoading, isLoggedIn }) => {
         <label className="form__input-container">
           Пароль
           <input
-            className="form__input input-focus input-placeholder"
+            className={`form__input input-focus input-placeholder ${
+              errors.password ? 'form__input_style_error' : ''
+            }`}
             type="password"
             name="password"
             id="password"

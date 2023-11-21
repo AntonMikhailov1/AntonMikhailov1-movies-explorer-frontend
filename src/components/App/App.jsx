@@ -26,9 +26,44 @@ const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [isPreloaderActive, setPreloaderClass] = useState(true);
+  const [isPreloaderActive, setPreloaderStatus] = useState(true);
 
   const navigate = useNavigate();
+
+  const handleGetUser = useCallback(async () => {
+    try {
+      const userData = await mainApi.getUser();
+      if (userData) {
+        setLoggedIn(true);
+        setCurrentUser(userData);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setPreloaderStatus(false);
+    }
+  }, []);
+
+  const handleGetSavedMovies = useCallback(async () => {
+    try {
+      const moviesData = await mainApi.getSavedMovies();
+      if (moviesData) {
+        setSavedMovies(moviesData);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleGetUser();
+  }, [isLoggedIn, handleGetUser]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleGetSavedMovies();
+    }
+  }, [isLoggedIn, handleGetSavedMovies]);
 
   async function handleUserUpdate({ name, email }) {
     setLoading(true);
@@ -45,34 +80,34 @@ const App = () => {
   }
 
   async function handleUserSignUp({ name, email, password }) {
-      setLoading(true);
-      try {
-        const userData = await mainApi.signup({ name, email, password });
-        if (userData) {
-          handleUserLogin({ email, password });
-          navigate('/', { replace: true });
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    try {
+      const userData = await mainApi.signup({ name, email, password });
+      if (userData) {
+        handleUserLogin({ email, password });
+        navigate('/', { replace: true });
       }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    async function handleUserLogin({ email, password }) {
-      setLoading(true);
-      try {
-        const userData = await mainApi.login({ email, password });
-        if (userData) {
-          setLoggedIn(true);
-          navigate('/movies', { replace: true });
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
+  async function handleUserLogin({ email, password }) {
+    setLoading(true);
+    try {
+      const userData = await mainApi.login({ email, password });
+      if (userData) {
+        setLoggedIn(true);
+        navigate('/movies', { replace: true });
       }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
+  }
 
   async function handleUserSignOut() {
     try {
@@ -88,20 +123,6 @@ const App = () => {
     }
   }
 
-  const handleGetUser = useCallback(async () => {
-    try {
-      const userData = await mainApi.getUser();
-      if (userData) {
-        setLoggedIn(true);
-        setCurrentUser(userData);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setPreloaderClass(false);
-    }
-  }, []);
-
   async function handleGetAllMovies() {
     setLoading(true);
     try {
@@ -116,66 +137,45 @@ const App = () => {
     }
   }
 
-  const handleGetSavedMovies = useCallback(async () => {
+  async function handleSaveMovie(movie) {
     try {
-      const moviesData = await mainApi.getMovies();
-      if (moviesData) {
-        setSavedMovies(moviesData);
+      const movieData = await mainApi.saveMovie({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `${MOVIES_API_URL}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      });
+      if (movieData) {
+        setSavedMovies([movieData, ...savedMovies]);
       }
     } catch (err) {
       console.error(err);
     }
-  }, []);
-
-  async function handleSaveMovie(movie) {
-      try {
-        const movieData = await mainApi.createMovie({
-          country: movie.country,
-          director: movie.director,
-          duration: movie.duration,
-          year: movie.year,
-          description: movie.description,
-          image: `${MOVIES_API_URL}${movie.image.url}`,
-          trailerLink: movie.trailerLink,
-          thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
-          movieId: movie.id,
-          nameRU: movie.nameRU,
-          nameEN: movie.nameEN,
-        });
-        if (movieData) {
-          setSavedMovies([movieData, ...savedMovies]);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  }
 
   async function handleDeleteMovie(movie) {
-      const savedMovie = savedMovies.find(
-        (item) => item.movieId === movie.id || item.movieId === movie.movieId
-      );
+    const savedMovie = savedMovies.find(
+      (item) => item.movieId === movie.id || item.movieId === movie.movieId
+    );
 
-      try {
-        const data = await mainApi.deleteMovie(savedMovie._id);
-        if (data) {
-          setSavedMovies((state) =>
-            state.filter((item) => item._id !== savedMovie._id)
-          );
-        }
-      } catch (err) {
-        console.error(err);
+    try {
+      const data = await mainApi.deleteMovie(savedMovie._id);
+      if (data) {
+        setSavedMovies((state) =>
+          state.filter((item) => item._id !== savedMovie._id)
+        );
       }
+    } catch (err) {
+      console.error(err);
     }
-
-    useEffect(() => {
-      handleGetUser();
-    }, [isLoggedIn, handleGetUser]);
-
-    useEffect(() => {
-      if (isLoggedIn) {
-        handleGetSavedMovies();
-      }
-    }, [isLoggedIn, handleGetSavedMovies]);
+  }
 
   return (
     <div className="app">
@@ -206,7 +206,7 @@ const App = () => {
                   <ProtectedRoute
                     element={SavedMovies}
                     savedMovies={savedMovies}
-                    onCardDelete={handleDeleteMovie}
+                    onMovieDelete={handleDeleteMovie}
                     isLoggedIn={isLoggedIn}
                   />
                 }

@@ -26,15 +26,7 @@
   column-gap: 20px;
 }
 
-.navigation__movies-link {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.286;
-  text-decoration: none;
-  color: var(--navigation-link-text-color);
-}
-
-.navigation__saved-movies-link {
+.navigation__link {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.286;
@@ -56,6 +48,7 @@
 
 .navigation__link-active {
   font-weight: 500;
+  transition: all 0.4s;
 }
  
 .navigation__profile-icon {

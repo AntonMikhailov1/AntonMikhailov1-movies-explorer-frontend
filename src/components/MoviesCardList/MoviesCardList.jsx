@@ -1,62 +1,61 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import './MoviesCardList.css';
 
 import MoviesCard from '../MoviesCard/MoviesCard.jsx';
-import Preloader from "../Preloader/Preloader";
+import Preloader from '../Preloader/Preloader';
 
-import { handleSavedStatus } from "../../utils/utils";
+import { getSavedStatus } from '../../utils/utils';
 
-const MoviesCardList = ({ movies,
+const MoviesCardList = ({
+  movies,
   savedMovies,
   renderParams,
   isMoviesNotFound,
   onMovieSave,
   onMovieDelete,
-  isLoading }) => {
+  isLoading,
+}) => {
+  const [moviesForRenderList, setMoviesForRender] = useState([]);
+  const location = useLocation();
 
-    const [moviesForRenderList, setMoviesForRender] = useState([]);
-    const location = useLocation();
-
-    useEffect(() => {
-      if (location.pathname === "/movies" && movies.length) {
-        const result = movies.filter((movie, index) => {
-          return index < renderParams.total;
-        });
-        setMoviesForRender(result);
-      }
-    }, [location.pathname, movies, renderParams]);
-
-    useEffect(() => {
-      if (location.pathname === "/saved-movies") {
-        setMoviesForRender(movies);
-      }
-    }, [location.pathname, movies]);
-
-    function handleMoreButtonClick() {
-      const moviesLength = moviesForRenderList.length;
-      const moviesLengthTotal = moviesLength + renderParams.more;
-      const remainingMovies = movies.length - moviesLength;
-      if (remainingMovies > 0) {
-        const additionalMovies = movies.slice(moviesLength, moviesLengthTotal);
-        setMoviesForRender([...moviesForRenderList, ...additionalMovies]);
-      }
+  useEffect(() => {
+    if (location.pathname === '/movies' && movies.length) {
+      const moviesForRender = movies.filter((movie, index) => {
+        return index < renderParams.total;
+      });
+      setMoviesForRender(moviesForRender);
     }
+  }, [location.pathname, movies, renderParams]);
+
+  useEffect(() => {
+    if (location.pathname === '/saved-movies') {
+      setMoviesForRender(movies);
+    }
+  }, [location.pathname, movies]);
+
+  function handleMoreButtonClick() {
+    const moviesLength = moviesForRenderList.length;
+    const moviesLengthTotal = moviesLength + renderParams.more;
+    const remainingMovies = movies.length - moviesLength;
+    if (remainingMovies > 0) {
+      const additionalMovies = movies.slice(moviesLength, moviesLengthTotal);
+      setMoviesForRender([...moviesForRenderList, ...additionalMovies]);
+    }
+  }
 
   return (
     <>
-      {isLoading && movies.length === 0 && <Preloader />}
+      {isLoading && <Preloader />}
       {movies.length !== 0 && !isMoviesNotFound && (
         <>
-          <ul
-            className="movies-card-list"
-          >
+          <ul className="movies-card-list">
             {moviesForRenderList.map((movie) => (
               <MoviesCard
                 movie={movie}
                 key={movie.id || movie._id}
-                isSaved={handleSavedStatus(savedMovies, movie)}
+                isSaved={getSavedStatus(savedMovies, movie)}
                 onMovieSave={onMovieSave}
                 onMovieDelete={onMovieDelete}
               />

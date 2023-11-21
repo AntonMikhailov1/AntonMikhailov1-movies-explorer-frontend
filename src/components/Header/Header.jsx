@@ -16,7 +16,11 @@ const Header = ({ isLoggedIn }) => {
     >
       <div className="header__container">
         <Link to="/">
-          <img className="logo link-hover" src={logo} alt="Логотип Movies Explorer" />
+          <img
+            className="logo link-hover"
+            src={logo}
+            alt="Логотип Movies Explorer"
+          />
         </Link>
         {!isLoggedIn ? (
           <div className="header__link-container">

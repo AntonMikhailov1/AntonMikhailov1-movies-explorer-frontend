@@ -30,19 +30,43 @@ const Navigation = () => {
         ></button>
         <div className="navigation__movies-container">
           {isMenuOpen ? (
-            <Link to="/" className={`navigation__main-link link-hover ${location.pathname === '/' ? 'navigation__link-active' : ''}`}>
+            <Link
+              to="/"
+              className={`navigation__main-link link-hover ${
+                location.pathname === '/' ? 'navigation__link-active' : ''
+              }`}
+            >
               Главная
             </Link>
           ) : null}
-          <Link to="/movies" className={`navigation__movies-link link-hover ${location.pathname === '/movies' ? 'navigation__link-active' : ''}`}>
+          <Link
+            to="/movies"
+            className={`navigation__link link-hover ${
+              location.pathname === '/movies' ? 'navigation__link-active' : ''
+            }`}
+          >
             Фильмы
           </Link>
-          <Link to="/saved-movies" className={`navigation__saved-movies-link link-hover ${location.pathname === '/saved-movies' ? 'navigation__link-active' : ''}`}>
+          <Link
+            to="/saved-movies"
+            className={`navigation__link link-hover ${
+              location.pathname === '/saved-movies'
+                ? 'navigation__link-active'
+                : ''
+            }`}
+          >
             Сохранённые фильмы
           </Link>
         </div>
         <Link to="/profile" className="navigation__profile-link link-hover">
-          Аккаунт <div className={`navigation__profile-icon link-hover ${location.pathname === '/' ? 'navigation__profile-icon_landing' : ''}`} ></div>
+          Аккаунт{' '}
+          <div
+            className={`navigation__profile-icon link-hover ${
+              location.pathname === '/'
+                ? 'navigation__profile-icon_landing'
+                : ''
+            }`}
+          ></div>
         </Link>
       </nav>
       <button
