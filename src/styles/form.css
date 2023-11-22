@@ -35,6 +35,10 @@
   color: var(--form-input-error-color);
 }
 
+.form__input_style_error:focus {
+  border-color: var(--form-input-error-color);
+}
+
 .form__input-error {
   display: block;
   margin-top: 5px;
@@ -47,6 +51,8 @@
   line-height: 1.0;
   color: var(--form-input-error-color);
 }
+
+
 
 .form__input-error_active {
   opacity: 1;

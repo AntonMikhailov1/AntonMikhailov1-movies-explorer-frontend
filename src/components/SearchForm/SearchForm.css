@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-/* .search__search-error {
+.search__search-error {
     font-weight: 400;
     font-size: 11px;
     line-height: 1.2;
@@ -90,7 +90,7 @@
     position: absolute;
     top: 50px;
     left: 53px;
-} */
+}
 
 @media screen and (max-width: 920px) {
   .search {

@@ -18,6 +18,12 @@
   text-align: center;
 }
 
+.profile__link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .profile__info {
   list-style: none;
   margin-bottom: 205px;
@@ -43,17 +49,31 @@
   font-size: 11px;
   font-weight: 500;
   line-height: 1.21;
+  margin-right: 10px;
 }
 
 .profile__input {
+  flex-grow: 1;
+  max-width: 300px;
   font-size: 11px;
   font-weight: 400;
   line-height: 1.21;
   text-align: right;
+  background-color: transparent;
 }
 
-.profile__input:focus {
-  outline: none;
+.profile__input[readonly] {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.profile__input_style_error {
+  border-color: var(--form-input-error-color);
+  color: var(--form-input-error-color);
+}
+
+.profile__input_style_error:focus {
+  border-color: var(--form-input-error-color);
 }
 
 .profile__edit-button {
@@ -64,6 +84,11 @@
   background-color: transparent;
 }
 
+.profile__edit-button:disabled {
+  color: #e8e8e8;
+  pointer-events: none;
+}
+
 .profile__exit-button {
   font-size: 13px;
   font-weight: 500;
@@ -71,6 +96,55 @@
   text-decoration: none;
   color: var(--profile-exit-link-color);
 }
+
+.profile__submit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 410px;
+  height: 45px;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #3456F3;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.21;
+}
+
+.profile__submit-button:disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  pointer-events: none;
+}
+
+.profile__message {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.21;
+  text-align: center;
+  width: 410px;
+  height: 45px;
+  color: var(--form-input-error-color);
+  flex-shrink: 0;
+}
+
+.profile__message_type_error {
+  color: var(--form-input-error-color);
+}
+
+.profile__message_type_success {
+  color: #2BE080;
+  ;
+}
+
 
 @media screen and (max-width: 920px) {
   .profile__title {
@@ -108,5 +182,16 @@
   
   .profile__exit-button {
     font-size: 12px;
+  }
+
+  .profile__submit-button {
+    font-size: 12px;
+    width: 260px;
+    height: 45px;
+  }
+
+  .profile__error-message {
+    font-size: 11px;
+    width: 260px;
   }
 }

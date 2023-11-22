@@ -3,7 +3,6 @@ import './Header.css';
 import logo from '../../images/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 
-import { isLoggedIn } from '../App/App.jsx';
 import Navigation from '../Navigation/Navigation.jsx';
 
 const Header = ({ isLoggedIn }) => {
@@ -17,9 +16,13 @@ const Header = ({ isLoggedIn }) => {
     >
       <div className="header__container">
         <Link to="/">
-          <img className="logo link-hover" src={logo} alt="Логотип Movies Explorer" />
+          <img
+            className="logo link-hover"
+            src={logo}
+            alt="Логотип Movies Explorer"
+          />
         </Link>
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
           <div className="header__link-container">
             <Link to="/signup" className="header__signup-link link-hover">
               Регистрация

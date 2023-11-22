@@ -1,15 +1,25 @@
 import { Link, useLocation } from 'react-router-dom';
 
 import './Navigation.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const location = useLocation();
 
   const toogleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  const handleCloseMenuOnRedirect = () => {
+    if (isMenuOpen) {
+      closeMenu();
+    }
   };
 
   return (
@@ -22,23 +32,54 @@ const Navigation = () => {
           className={`navigation__close-button button-hover ${
             isMenuOpen ? 'navigation__close-button_menu-opened' : ''
           }`}
-          onClick={toogleMenu}
+          onClick={closeMenu}
         ></button>
         <div className="navigation__movies-container">
           {isMenuOpen ? (
-            <Link to="/" className={`navigation__main-link link-hover ${location.pathname === '/' ? 'navigation__link-active' : ''}`}>
+            <Link
+              to="/"
+              className={`navigation__main-link link-hover ${
+                location.pathname === '/' ? 'navigation__link-active' : ''
+              }`}
+              onClick={handleCloseMenuOnRedirect}
+            >
               Главная
             </Link>
           ) : null}
-          <Link to="/movies" className={`navigation__movies-link link-hover ${location.pathname === '/movies' ? 'navigation__link-active' : ''}`}>
+          <Link
+            to="/movies"
+            className={`navigation__link link-hover ${
+              location.pathname === '/movies' ? 'navigation__link-active' : ''
+            }`}
+            onClick={handleCloseMenuOnRedirect}
+          >
             Фильмы
           </Link>
-          <Link to="/saved-movies" className={`navigation__saved-movies-link link-hover ${location.pathname === '/saved-movies' ? 'navigation__link-active' : ''}`}>
+          <Link
+            to="/saved-movies"
+            className={`navigation__link link-hover ${
+              location.pathname === '/saved-movies'
+                ? 'navigation__link-active'
+                : ''
+            }`}
+            onClick={handleCloseMenuOnRedirect}
+          >
             Сохранённые фильмы
           </Link>
         </div>
-        <Link to="/profile" className="navigation__profile-link link-hover">
-          Аккаунт <div className={`navigation__profile-icon link-hover ${location.pathname === '/' ? 'navigation__profile-icon_landing' : ''}`} ></div>
+        <Link
+          to="/profile"
+          className="navigation__profile-link link-hover"
+          onClick={handleCloseMenuOnRedirect}
+        >
+          Аккаунт{' '}
+          <div
+            className={`navigation__profile-icon link-hover ${
+              location.pathname === '/'
+                ? 'navigation__profile-icon_landing'
+                : ''
+            }`}
+          ></div>
         </Link>
       </nav>
       <button

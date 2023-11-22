@@ -21,7 +21,26 @@
   border-radius: 3px;
   width: 100%;
   height: 45px;
-  cursor: pointer;
+}
+
+.auth-submit__button {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--auth-submit-text-color);
+  background-color: var(--auth-submit-background-color);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.21;
+  border-radius: 3px;
+  width: 100%;
+  height: 45px;
+}
+
+.auth-submit__button:disabled {
+  background-color: #e8e8e8;
+  pointer-events: none;
 }
 
 .auth-submit__subtitle {
