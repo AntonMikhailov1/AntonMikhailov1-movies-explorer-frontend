@@ -31,6 +31,17 @@
   border-radius: 6px;
 }
 
+.movies-card-list__not-found-message {
+  margin-top: 50px;
+  margin-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.21;
+  color: rgb(95, 95, 95);
+}
+
 @media screen and (max-width: 1160px) {
   .movies-card-list {
     grid-template-columns: repeat(2, 1fr);

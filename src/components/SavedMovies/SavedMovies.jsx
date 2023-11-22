@@ -80,38 +80,32 @@ const SavedMovies = ({ savedMovies, onMovieDelete }) => {
         setMoviesNotFound(true);
         setMoviesForRenderList(foundMovies);
       } else {
-        const filteredAndFoundMovies = handleMovieFiltering(
+        const filteredMovies = handleMovieFiltering(
           foundMovies,
           filterStatus,
           true
         );
-        setMoviesForRenderList(filteredAndFoundMovies);
-        if (!filteredAndFoundMovies.length) {
+        setMoviesForRenderList(filteredMovies);
+        if (!filteredMovies.length) {
           setMoviesNotFound(true);
         }
       }
-    }
-    if (
-      !localStorage.getItem('savedMoviesSearchQuery') &&
-      localStorage.getItem('isSavedMoviesFilterChecked')
+    } else if (
+      !localStorage.getItem("savedMoviesSearchQuery") &&
+      localStorage.getItem("isSavedMoviesFilterChecked")
     ) {
       setFilteredMoviesList(savedMovies);
-      const filterStatus = JSON.parse(
-        localStorage.getItem('isSavedMoviesFilterChecked')
-      );
+      const filterStatus = JSON.parse(localStorage.getItem("isSavedMoviesFilterChecked"));
       setFilter(filterStatus);
-      const filteredMovies = handleMovieFiltering(
-        savedMovies,
-        filterStatus,
-        true
-      );
+      const filteredMovies = handleMovieFiltering(savedMovies, filterStatus, true);
       setMoviesForRenderList(filteredMovies);
       if (!filteredMovies.length) {
         setMoviesNotFound(true);
       }
+    } else {
+      setMoviesForRenderList(savedMovies);
+      setFilteredMoviesList(savedMovies);
     }
-    setMoviesForRenderList(savedMovies);
-    setFilteredMoviesList(savedMovies);
   }, [savedMovies]);
 
   return (

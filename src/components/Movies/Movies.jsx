@@ -27,19 +27,6 @@ const Movies = ({
 
   const screenWidth = useScreenWidth();
 
-  useEffect(() => {
-    if (screenWidth >= RENDER_CONFIG.base.width) {
-      setRenderParams(RENDER_CONFIG.base.cards);
-    }
-    if (
-      screenWidth < RENDER_CONFIG.base.width &&
-      screenWidth >= RENDER_CONFIG.tablet.width
-    ) {
-      setRenderParams(RENDER_CONFIG.tablet.cards);
-    }
-    setRenderParams(RENDER_CONFIG.mobile.cards);
-  }, [screenWidth]);
-
   const handleSearchAndFiltering = useCallback(
     (movies, searchQuery) => {
       const foundMovies = handleMovieSearch(movies, searchQuery, false);
@@ -98,6 +85,24 @@ const Movies = ({
     },
     [foundMoviesList]
   );
+
+  useEffect(() => {
+    if (screenWidth >= RENDER_CONFIG.desktop.width) {
+      setRenderParams(RENDER_CONFIG.desktop.cards);
+    } else if (
+      screenWidth < RENDER_CONFIG.desktop.width &&
+      screenWidth >= RENDER_CONFIG.tablet.width
+    ) {
+      setRenderParams(RENDER_CONFIG.desktop.cards);
+    } else if (
+      screenWidth < RENDER_CONFIG.tablet.width &&
+      screenWidth >= RENDER_CONFIG.mobile.width
+    ) {
+      setRenderParams(RENDER_CONFIG.tablet.cards);
+    } else {
+      setRenderParams(RENDER_CONFIG.mobile.cards);
+    }
+  }, [screenWidth]);
 
   useEffect(() => {
     if (

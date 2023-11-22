@@ -1,3 +1,5 @@
+import { SHORT_MOVIE_DURATION } from "./constants";
+
 function convertDuration(duration) {
   const oneHour = 60;
   const minutes = duration % oneHour;
@@ -10,16 +12,13 @@ function convertDuration(duration) {
 }
 
 function handleMovieFiltering(movies, isFilterChecked, isSavedMovies) {
-  const shortMovieDuration = 40;
   if (!isSavedMovies) {
     localStorage.setItem('isMoviesFilterChecked', isFilterChecked);
   } else {
     localStorage.setItem('isSavedMoviesFilterChecked', isFilterChecked);
   }
   if (isFilterChecked) {
-    const shortMovies = movies.filter(
-      (movie) => movie.duration <= shortMovieDuration
-    );
+    const shortMovies = movies.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION);
     return shortMovies;
   } else {
     return movies;
@@ -46,9 +45,9 @@ function handleMovieSearch(movies, searchQuery, isSavedMovies) {
 }
 
 function getSavedStatus(savedMovies, movieCard) {
-  return savedMovies.find(
-    (movie) => movie.movieId === (movieCard.id || movieCard.movieId)
-  );
+  return savedMovies.find((movie) => {
+    return movie.movieId === (movieCard.id || movieCard.movieId);
+  });
 }
 
 export {

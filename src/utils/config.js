@@ -1,5 +1,5 @@
 const RENDER_CONFIG = {
-  base: {
+  desktop: {
     width: 1280,
     cards: {
       total: 12,

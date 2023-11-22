@@ -27,6 +27,7 @@ const App = () => {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isPreloaderActive, setPreloaderStatus] = useState(true);
+  const [isProfileMessage, setProfileMessageStatus] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,27 +56,21 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    handleGetUser();
-  }, [isLoggedIn, handleGetUser]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      handleGetSavedMovies();
-    }
-  }, [isLoggedIn, handleGetSavedMovies]);
-
   async function handleUserUpdate({ name, email }) {
     setLoading(true);
     try {
       const userData = await mainApi.updateUserInfo({ name, email });
       if (userData) {
         setCurrentUser(userData);
+        setProfileMessageStatus(true);
       }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+      setTimeout(() => {
+        setProfileMessageStatus(false);
+      }, 2000);
     }
   }
 
@@ -177,6 +172,16 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    handleGetUser();
+  }, [isLoggedIn, handleGetUser]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleGetSavedMovies();
+    }
+  }, [isLoggedIn, handleGetSavedMovies]);
+
   return (
     <div className="app">
       {isPreloaderActive ? (
@@ -219,6 +224,7 @@ const App = () => {
                     onUserUpdate={handleUserUpdate}
                     onSignOut={handleUserSignOut}
                     isLoggedIn={isLoggedIn}
+                    isProfileMessage={isProfileMessage}
                   />
                 }
               />

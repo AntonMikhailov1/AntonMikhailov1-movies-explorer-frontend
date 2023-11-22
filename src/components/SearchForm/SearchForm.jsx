@@ -23,13 +23,6 @@ const SearchForm = ({
       const savedSearchQuery = localStorage.getItem('moviesSearchQuery');
       setSearchQuery(savedSearchQuery);
     }
-    if (
-      location.pathname === '/saved-movies' &&
-      localStorage.getItem('savedMoviesSearchQuery')
-    ) {
-      const savedSearchQuery = localStorage.getItem('savedMoviesSearchQuery');
-      setSearchQuery(savedSearchQuery);
-    }
   }, [location.pathname]);
 
   useEffect(() => {

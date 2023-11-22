@@ -9,13 +9,8 @@ import { MOVIES_API_URL } from '../../utils/constants';
 const MoviesCard = ({ movie, isSaved, onMovieSave, onMovieDelete }) => {
   const location = useLocation();
 
-  function handleSaveClick() {
-    onMovieSave(movie);
-  }
-
-  function handleDeleteClick() {
-    onMovieDelete(movie);
-  }
+  const handleSaveClick = () => onMovieSave(movie);
+  const handleDeleteClick = () => onMovieDelete(movie);
 
   return (
     <li className="movies-card">
@@ -41,9 +36,8 @@ const MoviesCard = ({ movie, isSaved, onMovieSave, onMovieDelete }) => {
           className={`movies-card__like-button button-hover ${
             isSaved ? 'movies-card__like-button_active' : ''
           }`}
-          disabled={isSaved}
           type="button"
-          onClick={handleSaveClick}
+          onClick={isSaved ? handleDeleteClick : handleSaveClick}
         />
       ) : (
         <button

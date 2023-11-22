@@ -6,12 +6,14 @@ import './Profile.css';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-const Profile = ({ onUserUpdate, onSignOut }) => {
+const Profile = ({ onUserUpdate, onSignOut, isProfileMessage }) => {
   const currentUser = useContext(CurrentUserContext);
   const [isCurrentUser, setCurrentUser] = useState(true);
   const [isEditing, setEditingStatus] = useState(false);
   const { values, errors, isFormValid, handleChange, resetValidation } =
     useFormValidation();
+
+  const nameRegexp = "^[A-Za-zА-Яа-яЁё\\-\\s]+$";
 
   useEffect(() => {
     currentUser.name !== values.name || currentUser.email !== values.email
@@ -35,6 +37,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
     e.preventDefault();
     onUserUpdate(values);
     setEditingStatus(!isEditing);
+
   }
 
   return (
@@ -65,7 +68,7 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
             minLength={2}
             maxLength={30}
             placeholder="Введите имя"
-            pattern="^[A-Za-zА-Яа-яЁё\\-\\s]+$"
+            pattern={nameRegexp}
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -88,8 +91,10 @@ const Profile = ({ onUserUpdate, onSignOut }) => {
           />
         </fieldset>
       </form>
-      <span className="profile__error-message">
-        {errors.name || errors.email || ''}
+      <span className={`profile__message ${
+              isProfileMessage ? 'profile__message_type_success' : 'profile__message_type_error'
+            }`}>
+        {isProfileMessage ? 'Профиль успешно обновлен!' : '' || errors.name || errors.email}
       </span>
       <>
         {!isEditing ? (

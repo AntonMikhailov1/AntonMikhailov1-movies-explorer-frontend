@@ -47,7 +47,11 @@ const MoviesCardList = ({
 
   return (
     <>
-      {isLoading && <Preloader />}
+      {!localStorage.getItem("searchQuery") && movies.length === 0 && null}
+      {isLoading && movies.length === 0 && <Preloader />}
+      {isMoviesNotFound && (
+        <p className="movies-card-list__not-found-message">Ничего не&nbsp;найдено</p>
+      )}
       {movies.length !== 0 && !isMoviesNotFound && (
         <>
           <ul className="movies-card-list">
