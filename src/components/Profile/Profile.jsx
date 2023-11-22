@@ -120,6 +120,7 @@ const Profile = ({ onUserUpdate, onSignOut, isProfileMessage }) => {
             form="profile"
             className="profile__submit-button button-hover"
             disabled={handleDisable()}
+            onClick={}
           >
             Сохранить
           </button>
