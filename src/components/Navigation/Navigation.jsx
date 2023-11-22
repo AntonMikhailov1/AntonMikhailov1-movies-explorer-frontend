@@ -16,6 +16,12 @@ const Navigation = () => {
     setMenuOpen(false);
   };
 
+  const handleCloseMenuOnRedirect = () => {
+    if (isMenuOpen) {
+      closeMenu();
+    }
+  };
+
   return (
     <>
       <nav
@@ -35,6 +41,7 @@ const Navigation = () => {
               className={`navigation__main-link link-hover ${
                 location.pathname === '/' ? 'navigation__link-active' : ''
               }`}
+              onClick={handleCloseMenuOnRedirect}
             >
               Главная
             </Link>
@@ -44,6 +51,7 @@ const Navigation = () => {
             className={`navigation__link link-hover ${
               location.pathname === '/movies' ? 'navigation__link-active' : ''
             }`}
+            onClick={handleCloseMenuOnRedirect}
           >
             Фильмы
           </Link>
@@ -54,11 +62,16 @@ const Navigation = () => {
                 ? 'navigation__link-active'
                 : ''
             }`}
+            onClick={handleCloseMenuOnRedirect}
           >
             Сохранённые фильмы
           </Link>
         </div>
-        <Link to="/profile" className="navigation__profile-link link-hover">
+        <Link
+          to="/profile"
+          className="navigation__profile-link link-hover"
+          onClick={handleCloseMenuOnRedirect}
+        >
           Аккаунт{' '}
           <div
             className={`navigation__profile-icon link-hover ${
